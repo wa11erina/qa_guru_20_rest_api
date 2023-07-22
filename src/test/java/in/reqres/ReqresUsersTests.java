@@ -6,7 +6,7 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
 
-public class reqresUsersTests {
+public class ReqresUsersTests extends TestBase{
 
     @Test
     void getListOfUsersTest() {
@@ -14,7 +14,7 @@ public class reqresUsersTests {
                 .log().uri()
                 .log().method()
                 .when()
-                .get("https://reqres.in/api/users?page=2")
+                .get("/users?page=2")
                 .then()
                 .log().status()
                 .log().body()
@@ -35,7 +35,7 @@ public class reqresUsersTests {
                 .contentType(JSON)
                 .body(authData)
                 .when()
-                .post("https://reqres.in/api/login")
+                .post("/login")
                 .then()
                 .log().status()
                 .log().body()
@@ -55,7 +55,7 @@ public class reqresUsersTests {
                 .contentType(JSON)
                 .body(authData)
                 .when()
-                .put("https://reqres.in/api/users/2")
+                .put("/users/2")
                 .then()
                 .log().status()
                 .log().body()
@@ -76,7 +76,7 @@ public class reqresUsersTests {
                 .contentType(JSON)
                 .body(authData)
                 .when()
-                .patch("https://reqres.in/api/users/2")
+                .patch("/users/2")
                 .then()
                 .log().status()
                 .log().body()
@@ -91,12 +91,11 @@ public class reqresUsersTests {
                 .log().uri()
                 .log().method()
                 .when()
-                .delete("https://reqres.in/api/users/2")
+                .delete("/users/2")
                 .then()
                 .log().status()
                 .log().body()
                 .statusCode(204);
 
     }
-
 }
