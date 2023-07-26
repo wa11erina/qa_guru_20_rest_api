@@ -17,19 +17,6 @@ def jUnitVersion = "5.10.0-RC1",
     assertJ = "3.24.2",
     allureVersion = "2.23.0"
 
-allure {
-    report {
-        version.set(allureVersion)
-    }
-    adapter {
-        aspectjWeaver.set(true)
-        frameworks {
-            junit5 {
-                adapterVersion.set(allureVersion)
-            }
-        }
-    }
-}
 
 dependencies {
     testImplementation(
