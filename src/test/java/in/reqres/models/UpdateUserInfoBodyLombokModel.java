@@ -8,5 +8,4 @@ public class UpdateUserInfoBodyLombokModel {
 
     String name, job, updatedAt;
 
-
 }
