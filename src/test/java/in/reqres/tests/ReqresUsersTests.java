@@ -1,13 +1,14 @@
 package in.reqres.tests;
 
-import in.reqres.models.*;
+import in.reqres.models.LoginBodyPojoModel;
+import in.reqres.models.UnsuccessfulLoginResponseModel;
+import in.reqres.models.UpdateUserInfoBodyLombokModel;
+import in.reqres.models.UpdateUserInfoBodyPajoModel;
 import org.junit.jupiter.api.Test;
 
 import static in.reqres.specs.reqresUsersSpec.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ReqresUsersTests {
@@ -60,8 +61,8 @@ public class ReqresUsersTests {
                         .spec(updateUserInfoSpec)
                         .extract().as(UpdateUserInfoBodyLombokModel.class));
         step("Check response", () -> {
-                assertEquals("morpheus", dataToUpdate.getName());
-                assertEquals("zion resident", dataToUpdate.getJob());
+            assertEquals("morpheus", dataToUpdate.getName());
+            assertEquals("zion resident", dataToUpdate.getJob());
         });
     }
 
@@ -74,14 +75,14 @@ public class ReqresUsersTests {
         dataToUpdate.setUpdatedAt("2023-07-22T14:08:15.606Z");
 
         UpdateUserInfoBodyPajoModel updatedData = step("Make request", () ->
-            given()
-                    .spec(userActionsSpec)
-                    .body(dataToUpdate)
-                    .when()
-                    .patch("/users/2")
-                    .then()
-                    .spec(updateUserInfoSpec)
-                    .extract().as(UpdateUserInfoBodyPajoModel.class));
+                given()
+                        .spec(userActionsSpec)
+                        .body(dataToUpdate)
+                        .when()
+                        .patch("/users/2")
+                        .then()
+                        .spec(updateUserInfoSpec)
+                        .extract().as(UpdateUserInfoBodyPajoModel.class));
         step("Check response", () -> {
             assertEquals("morpheus", dataToUpdate.getName());
             assertEquals("zion resident", dataToUpdate.getJob());
