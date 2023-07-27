@@ -1,14 +1,15 @@
 package in.reqres.tests;
 
-import in.reqres.models.LoginBodyPojoModel;
-import in.reqres.models.UnsuccessfulLoginResponseModel;
-import in.reqres.models.UpdateUserInfoBodyLombokModel;
-import in.reqres.models.UpdateUserInfoBodyPajoModel;
+import in.reqres.models.*;
+import io.qameta.allure.restassured.AllureRestAssured;
 import org.junit.jupiter.api.Test;
 
+import static in.reqres.helpers.CustomAllureListener.withCustomTemplates;
 import static in.reqres.specs.ReqresUsersSpec.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
+import static io.restassured.http.ContentType.JSON;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ReqresUsersTests {
