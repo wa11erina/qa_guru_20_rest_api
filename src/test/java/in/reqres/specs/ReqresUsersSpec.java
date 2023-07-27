@@ -11,7 +11,7 @@ import static io.restassured.filter.log.LogDetail.STATUS;
 import static io.restassured.http.ContentType.JSON;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
-public class reqresUsersSpec {
+public class ReqresUsersSpec {
     public static RequestSpecification usersSpec = with()
             .log().uri()
             .log().method()

@@ -6,7 +6,7 @@ import in.reqres.models.UpdateUserInfoBodyLombokModel;
 import in.reqres.models.UpdateUserInfoBodyPajoModel;
 import org.junit.jupiter.api.Test;
 
-import static in.reqres.specs.reqresUsersSpec.*;
+import static in.reqres.specs.ReqresUsersSpec.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
