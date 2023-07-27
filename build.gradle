@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
-    id "io.freefair.lombok" version "8.1.0"
-    id "io.qameta.allure" version "2.11.2"
+    id 'io.qameta.allure' version '2.11.2'
+    id "io.freefair.lombok" version "6.0.0-m2"
 }
 
 group = 'guru.qa'
@@ -11,11 +11,11 @@ repositories {
     mavenCentral()
 }
 
-def jUnitVersion = "5.10.0-RC1",
+def jUnitVersion = "5.9.3",
     slf4jVersion = "2.0.7",
     restAssured = "5.3.1",
     assertJ = "3.24.2",
-    allureVersion = "2.23.0"
+    allureVersion = "2.21.0"
 
 
 dependencies {
@@ -36,8 +36,11 @@ tasks.withType(JavaCompile) {
 tasks.withType(Test) {
     useJUnitPlatform()
     systemProperties(System.getProperties())
-}
 
-test {
-    useJUnitPlatform()
+    testLogging {
+        lifecycle {
+            events "started", "skipped", "failed", "standard_error", "standard_out"
+            exceptionFormat "short"
+        }
+    }
 }
