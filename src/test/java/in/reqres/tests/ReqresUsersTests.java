@@ -1,15 +1,14 @@
 package in.reqres.tests;
 
-import in.reqres.models.*;
-import io.qameta.allure.restassured.AllureRestAssured;
+import in.reqres.models.LoginBodyLombokModel;
+import in.reqres.models.UnsuccessfulLoginLombokModel;
+import in.reqres.models.UpdateUserInfoBodyLombokModel;
+import in.reqres.models.UpdateUserInfoBodyPajoModel;
 import org.junit.jupiter.api.Test;
 
-import static in.reqres.helpers.CustomAllureListener.withCustomTemplates;
 import static in.reqres.specs.ReqresUsersSpec.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
-import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ReqresUsersTests {
@@ -22,24 +21,24 @@ public class ReqresUsersTests {
                 .when()
                 .get("/users?page=2")
                 .then()
-                .spec(listOfUsersSpec);
+                .spec(listOfUsersResponseSpec200);
     }
 
     @Test
-    void unsuccessfulLoginWithPojoModelsTest() {
+    void unsuccessfulLoginWithLombokModelTest() {
 
-        LoginBodyPojoModel authData = new LoginBodyPojoModel();
+        LoginBodyLombokModel authData = new LoginBodyLombokModel();
         authData.setEmail("peter@klaven");
 
-        UnsuccessfulLoginResponseModel unsuccessfulResponse = step("Make request", () ->
+        UnsuccessfulLoginLombokModel unsuccessfulResponse = step("Make request", () ->
                 given()
                         .spec(userActionsSpec)
                         .body(authData)
                         .when()
                         .post("/login")
                         .then()
-                        .spec(unsuccessfulLoginSpec)
-                        .extract().as(UnsuccessfulLoginResponseModel.class));
+                        .spec(unsuccessfulLoginResponseSpec400)
+                        .extract().as(UnsuccessfulLoginLombokModel.class));
         step("Check response", () ->
                 assertEquals("Missing password", unsuccessfulResponse.getError()));
     }
@@ -59,7 +58,7 @@ public class ReqresUsersTests {
                         .when()
                         .put("/users/2")
                         .then()
-                        .spec(updateUserInfoSpec)
+                        .spec(updateUserInfoResponseSpec200)
                         .extract().as(UpdateUserInfoBodyLombokModel.class));
         step("Check response", () -> {
             assertEquals("morpheus", dataToUpdate.getName());
@@ -82,7 +81,7 @@ public class ReqresUsersTests {
                         .when()
                         .patch("/users/2")
                         .then()
-                        .spec(updateUserInfoSpec)
+                        .spec(updateUserInfoResponseSpec200)
                         .extract().as(UpdateUserInfoBodyPajoModel.class));
         step("Check response", () -> {
             assertEquals("morpheus", dataToUpdate.getName());
@@ -97,6 +96,6 @@ public class ReqresUsersTests {
                 .when()
                 .delete("/users/2")
                 .then()
-                .spec(deleteUserSpec);
+                .spec(deleteUserResponseSpec204);
     }
 }

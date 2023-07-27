@@ -28,26 +28,26 @@ public class ReqresUsersSpec {
             .baseUri("https://reqres.in")
             .basePath("/api");
 
-    public static ResponseSpecification listOfUsersSpec = new ResponseSpecBuilder()
+    public static ResponseSpecification listOfUsersResponseSpec200 = new ResponseSpecBuilder()
             .log(STATUS)
             .log(BODY)
             .expectStatusCode(200)
             .expectBody(matchesJsonSchemaInClasspath("schemas/list_of_users_responce.json"))
             .build();
 
-    public static ResponseSpecification unsuccessfulLoginSpec = new ResponseSpecBuilder()
+    public static ResponseSpecification unsuccessfulLoginResponseSpec400 = new ResponseSpecBuilder()
             .log(STATUS)
             .log(BODY)
             .expectStatusCode(400)
             .build();
 
-    public static ResponseSpecification updateUserInfoSpec = new ResponseSpecBuilder()
+    public static ResponseSpecification updateUserInfoResponseSpec200 = new ResponseSpecBuilder()
             .log(STATUS)
             .log(BODY)
             .expectStatusCode(200)
             .build();
 
-    public static ResponseSpecification deleteUserSpec = new ResponseSpecBuilder()
+    public static ResponseSpecification deleteUserResponseSpec204 = new ResponseSpecBuilder()
             .log(STATUS)
             .log(BODY)
             .expectStatusCode(204)
