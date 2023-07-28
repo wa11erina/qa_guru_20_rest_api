@@ -1,9 +1,6 @@
 package in.reqres.tests;
 
-import in.reqres.models.LoginBodyLombokModel;
-import in.reqres.models.UnsuccessfulLoginLombokModel;
-import in.reqres.models.UpdateUserInfoBodyLombokModel;
-import in.reqres.models.UpdateUserInfoBodyPajoModel;
+import in.reqres.models.*;
 import org.junit.jupiter.api.Test;
 
 import static in.reqres.specs.ReqresUsersSpec.*;
@@ -16,12 +13,18 @@ public class ReqresUsersTests {
     @Test
     void getListOfUsersTest() {
 
-        given()
+        ListOfUsersLombokModel listOfUsers = step("Make request", () ->
+            given()
                 .spec(usersSpec)
                 .when()
                 .get("/users?page=2")
                 .then()
-                .spec(listOfUsersResponseSpec200);
+                .spec(listOfUsersResponseSpec200)
+                .extract().as(ListOfUsersLombokModel.class));
+        step("Check response", () -> {
+            assertEquals(12, listOfUsers.getTotal());
+            assertEquals(2, listOfUsers.getTotal_pages());
+        });
     }
 
     @Test
@@ -31,7 +34,7 @@ public class ReqresUsersTests {
         authData.setEmail("peter@klaven");
 
         UnsuccessfulLoginLombokModel unsuccessfulResponse = step("Make request", () ->
-                given()
+            given()
                         .spec(userActionsSpec)
                         .body(authData)
                         .when()
