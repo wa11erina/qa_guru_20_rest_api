@@ -1,6 +1,9 @@
 package in.reqres.tests;
 
-import in.reqres.models.*;
+import in.reqres.models.LoginBodyLombokModel;
+import in.reqres.models.UnsuccessfulLoginLombokModel;
+import in.reqres.models.UpdateUserInfoBodyLombokModel;
+import in.reqres.models.UpdateUserInfoBodyPajoModel;
 import org.junit.jupiter.api.Test;
 
 import static in.reqres.specs.ReqresUsersSpec.*;
@@ -12,19 +15,12 @@ public class ReqresUsersTests {
 
     @Test
     void getListOfUsersTest() {
-
-        ListOfUsersLombokModel listOfUsers = step("Make request", () ->
-            given()
+        given()
                 .spec(usersSpec)
                 .when()
                 .get("/users?page=2")
                 .then()
-                .spec(listOfUsersResponseSpec200)
-                .extract().as(ListOfUsersLombokModel.class));
-        step("Check response", () -> {
-            assertEquals(12, listOfUsers.getTotal());
-            assertEquals(2, listOfUsers.getTotal_pages());
-        });
+                .spec(listOfUsersResponseSpec200);
     }
 
     @Test
@@ -34,7 +30,7 @@ public class ReqresUsersTests {
         authData.setEmail("peter@klaven");
 
         UnsuccessfulLoginLombokModel unsuccessfulResponse = step("Make request", () ->
-            given()
+                given()
                         .spec(userActionsSpec)
                         .body(authData)
                         .when()
@@ -42,8 +38,9 @@ public class ReqresUsersTests {
                         .then()
                         .spec(unsuccessfulLoginResponseSpec400)
                         .extract().as(UnsuccessfulLoginLombokModel.class));
-        step("Check response", () ->
-                assertEquals("Missing password", unsuccessfulResponse.getError()));
+        step("Check response", () -> {
+            assertEquals("Missing password", unsuccessfulResponse.getError());
+        });
     }
 
     @Test

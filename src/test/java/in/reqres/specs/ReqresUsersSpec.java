@@ -10,6 +10,7 @@ import static io.restassured.filter.log.LogDetail.BODY;
 import static io.restassured.filter.log.LogDetail.STATUS;
 import static io.restassured.http.ContentType.JSON;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.hamcrest.Matchers.is;
 
 public class ReqresUsersSpec {
     public static RequestSpecification usersSpec = with()
@@ -33,6 +34,8 @@ public class ReqresUsersSpec {
             .log(BODY)
             .expectStatusCode(200)
             .expectBody(matchesJsonSchemaInClasspath("schemas/list_of_users_responce.json"))
+            .expectBody("total", is(12))
+            .expectBody("total_pages", is(2))
             .build();
 
     public static ResponseSpecification unsuccessfulLoginResponseSpec400 = new ResponseSpecBuilder()
